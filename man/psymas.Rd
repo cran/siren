@@ -5,7 +5,7 @@
 psymas database
 }
 \description{
-A database to be used as example in the functions included on \code{siren} package. It contains the answers of 1309 participants to the Psychological Maturty Assessment Scale (Morales-Vives et al., 2012, 2013). The example database provided only contains 10 items and measures two subscales.
+A database to be used as example in the functions included on \code{siren} package. It contains the answers of 1309 participants to the Psychological Maturity Assessment Scale (Morales-Vives et al., 2012, 2013). The example database provided only contains 10 items and measures two subscales.
 }
 \usage{data("psymas")}
 \format{

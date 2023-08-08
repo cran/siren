@@ -28,9 +28,6 @@ selecore
 transpose
 size
 }
-\value{
-Those are internal function, retorning different values, depending on the function.
-}
 \author{
 David Navarro-Gonzalez
 

@@ -20,11 +20,6 @@ acquihybrid<-function(x,content_factors,target, corr = "Pearson", raw_data=TRUE 
   n_factors<-content_factors
 
   ######################################################################
-  #  corr: Determine if Pearson or Polychoric matrix will be used "Pearson" or "Polychoric"
-  ######################################################################
-
-
-  ######################################################################
   #  target : The semi-specified target if procustes rotations are selected
   ######################################################################
 
@@ -37,6 +32,11 @@ acquihybrid<-function(x,content_factors,target, corr = "Pearson", raw_data=TRUE 
 
     #check target size
   }
+
+  ######################################################################
+  #  corr: Determine if Pearson or Polychoric matrix will be used "Pearson" or "Polychoric"
+  ######################################################################
+
 
 
   ######################################################################
@@ -97,8 +97,13 @@ acquihybrid<-function(x,content_factors,target, corr = "Pearson", raw_data=TRUE 
     # All factors are fully balanced, it is not necessary to find a balanced core.
     # Applying acquiextraction for the global matrix
 
+    cat('Computing Acquiescence extraction: Please wait                                                    \r')
+    flush.console()
     OUT <- acquiextraction(x,n_factors,corr,raw_data)
     AQ_var=OUT$AQ_var
+    cat('Computing Acquiescence extraction: Done!                                                          \n')
+    flush.console()
+    cat("\r","                                                                                                  ","\r")
 
 
   }
@@ -107,7 +112,7 @@ acquihybrid<-function(x,content_factors,target, corr = "Pearson", raw_data=TRUE 
 
     #Search the partially balanced factors
 
-
+    ptm_one <- proc.time()
 
     items_neg <- matrix(nrow=n_items,ncol=n_factors)
     items_pos <- matrix(nrow=n_items,ncol=n_factors)
@@ -254,14 +259,67 @@ acquihybrid<-function(x,content_factors,target, corr = "Pearson", raw_data=TRUE 
 
       }
 
+      if (display==TRUE){
+
+        compT <- proc.time() - ptm_one
+        compT<-compT[3]
+        compT<-compT*(n_factors-i)/i
+
+        secondsInAMinute = 60
+        secondsInAnHour = 60 * secondsInAMinute
+        secondsInADay = 24 * secondsInAnHour
+
+        days <- floor(compT / secondsInADay)
+
+        hourSeconds <- compT %% secondsInADay
+        hours <- floor(hourSeconds / secondsInAnHour)
+
+        minuteSeconds <- hourSeconds %% secondsInAnHour
+        minutes <- floor(minuteSeconds / secondsInAMinute)
+
+        remainingSeconds <- minuteSeconds %% secondsInAMinute
+        seconds <- ceiling(remainingSeconds)
+
+        if (compT > 3600){
+          if (days >= 1){ #Very very rare, but just to be sure
+            cat("Computing acquihybrid. Time remaining: +24 hours                                                     \r")
+            flush.console()
+          }
+          else {
+            cat("Computing acquihybrid. Time remaining: ", hours,"hours, ",minutes, "minutes and ",seconds, "seconds \r")
+            flush.console()
+          }
+        }
+        else{
+          if (compT >= 60){
+            cat("Computing acquihybrid. Time remaining: ", minutes, "minutes and ",seconds,"seconds \r")
+            flush.console()
+          }
+          if (compT < 60) {
+            cat("Computing acquihybrid. Time remaining ",seconds,"seconds                                                                  \r")
+            flush.console()
+          }
+        }
+      }
+
+    }
+    if (display==TRUE){
+      cat("\r","                                                                                                  ","\r")
+
+      # close(pb)
     }
 
 
     # We have the final global core (core_global) and out_core_global
 
     # Extract the acq from the items of the global core
-
+    cat('Computing Acquiescence extraction: Please wait                                                    \r')
+    flush.console()
     OUT <- acquiextraction(x[,core_global],3,corr,raw_data)
+    cat('Computing Acquiescence extraction: Done!                                                          \n')
+    flush.console()
+    cat("\r","                                                                                                  ","\r")
+
 
     acqcore=OUT$acq
     AQ_var=OUT$AQ_var
@@ -506,12 +564,19 @@ acquihybrid<-function(x,content_factors,target, corr = "Pearson", raw_data=TRUE 
 
   pfactors=NA
 
+  cat('Computing Factor Scores on lavaan: Please wait                                                    \r')
+  flush.console()
+
   if (raw_data==TRUE && method=="fixed" && corr=="Pearson"){
     pfactors = lavaan::lavPredict(fit, method = "regression" )
   }
   if (raw_data==TRUE && method=="fixed" && corr=="Polychoric"){
     pfactors = lavaan::lavPredict(fit, method = "EBM")
   }
+  cat('Computing Factor Scores on lavaan: Done!                                                         \n')
+  flush.console()
+  cat("\r","                                                                                                  ","\r")
+
 
   fit_ind=lavaan::fitmeasures(fit)
 

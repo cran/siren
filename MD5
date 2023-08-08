@@ -1,7 +1,7 @@
-32115d12bbe0058e7cc8472cb4bcc593 *DESCRIPTION
-be7a95a0570812451a26a2ca3b403da0 *NAMESPACE
+b7e748d6994bb5eb0b8b8f1efb73b72f *DESCRIPTION
+ecb8d3540a8048b140c08a6abb18148b *NAMESPACE
 f371e971c5c4c7a520583571448cb99e *R/acquiextraction.R
-23a4d5bb10c1240906820b21dfc8faae *R/acquihybrid.R
+c3d7f45aa7523a32b37f3748ba652271 *R/acquihybrid.R
 ed86de10afb49f9a42ef794477d6d4ff *R/congru.R
 5b613e466b9a88ab3055ff26d31fbdfa *R/extensionacq.R
 c0724b96b797c760827bea37b422c605 *R/extensionacqm.R
@@ -11,9 +11,9 @@ ca262d937e6a9441848d04e3a2d9f951 *R/ordnormulti.R
 6df0b8a4a029168ee77073dd2d2720a0 *R/selecore.R
 9165104b49cb8e3a5187358209d3b728 *R/size.R
 8bb8fbfa78faf892fa9732f5f89b31e0 *R/transpose.R
-364612fbcc0c53e209a112f028b7a813 *build/partial.rdb
+cb4924f3573383fca290a0a8e2ca5294 *build/partial.rdb
 84345bf709d10e24ffccd239ac6cda64 *data/psymas.rda
-0d941b91788e429983cc718c95229ff0 *man/acquihybrid.Rd
-d2e5cb9ba8410cc5732f5fddb64a1828 *man/psymas.Rd
-7f103d8a92ce093bc0b0b53ba7e4735f *man/siren-internal.Rd
+9dab2036e72504576fce4369477f7f18 *man/acquihybrid.Rd
+824d163d2a7285975bb92bc450fab9ae *man/psymas.Rd
+4248b6eef58231fe6b1a8cf485572e81 *man/siren-internal.Rd
 0a60a15e58d1800156c92c1501e27fea *man/siren-package.Rd
