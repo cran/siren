@@ -408,12 +408,14 @@ acquihybrid<-function(x,content_factors,target, corr = "Pearson", raw_data=TRUE 
 
       buff2=paste("V",buff[2:f2],sep="", collapse=" + ")
 
-      text=paste(text,"factor",i," =~",buffNA,buff2, "\n")
+      buff3=paste("factor",i,sep="")
+
+      text=paste(text,buff3," =~",buffNA,buff2, "\n")
     }
 
     other_text="\n "
     for (i in 1:(n_factors-1)){
-      other_text=paste(other_text,"factor",i,"~~1*factor",i, "\n")
+      other_text=paste(other_text,"factor",i,"~~1*factor",i, "\n", sep="")
     }
 
 
@@ -482,7 +484,9 @@ acquihybrid<-function(x,content_factors,target, corr = "Pearson", raw_data=TRUE 
 
       buff2=paste("V",buff[2:f2],sep="", collapse=" + ")
 
-      text=paste(text,"factor",i," =~",buffNA,buff2, "\n")
+      buff3=paste("factor",i,sep="")
+
+      text=paste(text,buff3," =~",buffNA,buff2, "\n")
     }
 
     # reallocating items labels to the new order
@@ -517,12 +521,12 @@ acquihybrid<-function(x,content_factors,target, corr = "Pearson", raw_data=TRUE 
 
     other_text="\n "
     for (i in 1:(n_factors-1)){
-      other_text=paste(other_text,"factor",i,"~~1*factor",i, "\n")
+      other_text=paste(other_text,"factor",i,"~~1*factor",i, "\n", sep="")
     }
 
     other_text2="\n"
     for (i in 1:(n_factors-1)){
-      other_text2=paste(other_text2,"factor",i,"~~0*ACfactor \n")
+      other_text2=paste(other_text2,"factor",i,"~~0*ACfactor \n", sep="")
     }
 
     text=paste(text,acq_text,other_text,other_text2)
