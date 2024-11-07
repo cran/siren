@@ -1,4 +1,4 @@
-d0f7051b162d1f89a25ec44ef976a2cd *DESCRIPTION
+42160a008edff57f2b009955ecf3f717 *DESCRIPTION
 ecb8d3540a8048b140c08a6abb18148b *NAMESPACE
 f371e971c5c4c7a520583571448cb99e *R/acquiextraction.R
 13868614a2f5aab3dbf4bc66c8158dfd *R/acquihybrid.R
@@ -11,9 +11,14 @@ ca262d937e6a9441848d04e3a2d9f951 *R/ordnormulti.R
 6df0b8a4a029168ee77073dd2d2720a0 *R/selecore.R
 9165104b49cb8e3a5187358209d3b728 *R/size.R
 8bb8fbfa78faf892fa9732f5f89b31e0 *R/transpose.R
-2836b2c5db38c9819380bd093383d89d *build/partial.rdb
-84345bf709d10e24ffccd239ac6cda64 *data/psymas.rda
+b54db8794555342c4feee5fe0b1b8f5b *build/partial.rdb
+ae0b5ecc270a665506731f97f9bcdae7 *build/vignette.rds
+077ad9a8a11f76d75a1c66d807116765 *data/psymas.rda
+6706aff5b3bc06c400a19b6678c33713 *inst/doc/vignette.R
+6b25b8f91808ca4ba0c9bb1368278b44 *inst/doc/vignette.Rmd
+fcfed9c6ecf15ea6137a553e438906e5 *inst/doc/vignette.html
 9dab2036e72504576fce4369477f7f18 *man/acquihybrid.Rd
 824d163d2a7285975bb92bc450fab9ae *man/psymas.Rd
 4248b6eef58231fe6b1a8cf485572e81 *man/siren-internal.Rd
 0a60a15e58d1800156c92c1501e27fea *man/siren-package.Rd
+6b25b8f91808ca4ba0c9bb1368278b44 *vignettes/vignette.Rmd

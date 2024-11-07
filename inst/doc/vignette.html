@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="David Navarro-Gonzalez, Pere Joan Ferrando, Fabia Morales-Vives and Ana Hernandez-Dorado" />
+
+<meta name="date" content="2024-11-07" />
+
+<title>siren Vignette</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">siren Vignette</h1>
+<h4 class="author">David Navarro-Gonzalez, Pere Joan Ferrando, Fabia
+Morales-Vives and Ana Hernandez-Dorado</h4>
+<h4 class="date">2024-11-07</h4>
+
+
+
+<p>This vignette ilustrates siren functions using the provided example
+dataset.</p>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>siren performs an hybrid multi-stage factor analytic procedure for
+controlling the effects of Acquiescence (ACQ) in multidimensional
+questionnaires for which a restricted factorial solution (Ferrando &amp;
+Lorenzo-Seva, 2000) can be specified. In the first stage, an
+unrestricted ACQ factor is estimated and its effects are partialled-out
+from the inter-item correlation matrix. In the second, a specified CFA
+solution is fitted to the cleaned matrix. This solution can be specified
+in two ways: (a) using the cleaned correlation matrix as input, or (b)
+specifying a full solution which has fixed loadings on the ACQ factor.
+The use of the program allows (a) the structural properties of the
+questionnaire to be assessed and (b) unbiased factor score estimates for
+both ACQ and content to be obtained for each respondent.</p>
+</div>
+<div id="usage" class="section level2">
+<h2>Usage</h2>
+<pre><code>acquihybrid(x, content_factors, target, corr = &quot;Pearson&quot;, raw_data=TRUE,
+   method = &quot;fixed&quot;, display = TRUE)</code></pre>
+<p>The complete description of the arguments can be found in the
+function documentation:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>?acquihybrid</span></code></pre></div>
+<p>The minimum required arguments are: the raw sample item scores (x),
+the content factors to be retained (content_factors) and the target
+pattern matrix (target), which provides the location of the items in the
+factors and the direction of each item in their corresponding
+factor.</p>
+<p>In the next section we will provide an empirical example, describing
+all the used input arguments.</p>
+</div>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<p>To illustrate how siren works, we have used an existing dataset of
+1309 participants (55.8% females) between 14 and 19 years old (M = 16.4,
+S.D. = 1.1) from three previous studies (Morales-Vives &amp; Dueñas,
+2018; Morales-Vives et al., 2020; Morales-Vives et al., in press.</p>
+<p>All participants answered the Psychological Maturity Assessment Scale
+questionnaire (PSYMAS; Morales-Vives et al., 2013), which assesses the
+psychological maturity of adolescents, understood as the ability to take
+responsibility for one’s own obligations, taking into account one’s own
+characteristics and needs, without showing excessive dependence on
+others. It consists of 27 items with a five-point response format (1 =
+Completely disagree, 5 = Completely agree) and it assesses the following
+factors: work orientation, self-reliance, and identity.</p>
+<p>In the current analysis, we have only used ten items from two of the
+subscales of this questionnaire (four items of the self-reliance
+subscale and six items of the identity subscale) so that within each
+subscale half of the items were in one direction (lack of maturity) and
+the other half in the opposite direction (high maturity). Self-reliance
+refers to willingness to take the initiative without allowing others to
+exercise excessive control, and Identity refers to knowledge about own’s
+characteristics and needs.</p>
+<p>The complete dataset is available through <code>siren::psymas</code>.
+For illustrative purposes, the first 10 respondents’ scores are:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Respondent</th>
+<th align="right">I1</th>
+<th align="right">I2</th>
+<th align="right">I3</th>
+<th align="right">I4</th>
+<th align="right">I5</th>
+<th align="right">I6</th>
+<th align="right">I7</th>
+<th align="right">I8</th>
+<th align="right">I9</th>
+<th align="right">I10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Respondent 1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Respondent 2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Respondent 3</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Respondent 4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Respondent 5</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Respondent 6</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Respondent 7</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Respondent 8</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Respondent 9</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Respondent 10</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+<p>As mentioned, two content factors will be specified int this case
+(Self-reliance and identity).</p>
+<p>Finally, the <code>target_matrix</code> of the 10 items is a matrix
+composed by 0 (the item does not measure this factor), -9 or 9, when the
+item measures the factor, in reverse or direct way.</p>
+<pre><code>psymas_target=cbind(c(-9,-9,0,0,0,9,0,0,9,0),c(0,0,-9,9,-9,0,9,-9,0,9))</code></pre>
+<p>Which reads as:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Item</th>
+<th align="left">F1</th>
+<th align="left">F2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">I1</td>
+<td align="left">-9</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">I2</td>
+<td align="left">-9</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">I3</td>
+<td align="left">0</td>
+<td align="left">-9</td>
+</tr>
+<tr class="even">
+<td align="left">I4</td>
+<td align="left">0</td>
+<td align="left">9</td>
+</tr>
+<tr class="odd">
+<td align="left">I5</td>
+<td align="left">0</td>
+<td align="left">-9</td>
+</tr>
+<tr class="even">
+<td align="left">I6</td>
+<td align="left">9</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">I7</td>
+<td align="left">0</td>
+<td align="left">9</td>
+</tr>
+<tr class="even">
+<td align="left">I8</td>
+<td align="left">0</td>
+<td align="left">-9</td>
+</tr>
+<tr class="odd">
+<td align="left">I9</td>
+<td align="left">9</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">I10</td>
+<td align="left">0</td>
+<td align="left">9</td>
+</tr>
+</tbody>
+</table>
+<p>The example can now be computed using the following code:</p>
+<pre><code>acquihybrid(psymas, content_factors = 2, target = psymas_target, corr = &quot;Polychoric&quot;)</code></pre>
+<p>Note that the corr = “Polychoric” argument specifies that the item
+scores are treated as ordered-categorical and that the structural
+non-linear solution is fitted to the inter-item polychoric correlation
+matrix.</p>
+<p>The factor loadings estimates are:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Item</th>
+<th align="right">F1</th>
+<th align="right">F2</th>
+<th align="right">ACQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">I1</td>
+<td align="right">0.293</td>
+<td align="right">0.000</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="even">
+<td align="left">I2</td>
+<td align="right">0.530</td>
+<td align="right">0.000</td>
+<td align="right">0.001</td>
+</tr>
+<tr class="odd">
+<td align="left">I6</td>
+<td align="right">-0.558</td>
+<td align="right">0.000</td>
+<td align="right">0.231</td>
+</tr>
+<tr class="even">
+<td align="left">I9</td>
+<td align="right">-0.398</td>
+<td align="right">0.000</td>
+<td align="right">0.206</td>
+</tr>
+<tr class="odd">
+<td align="left">I3</td>
+<td align="right">0.000</td>
+<td align="right">0.541</td>
+<td align="right">0.380</td>
+</tr>
+<tr class="even">
+<td align="left">I4</td>
+<td align="right">0.000</td>
+<td align="right">-0.569</td>
+<td align="right">0.079</td>
+</tr>
+<tr class="odd">
+<td align="left">I5</td>
+<td align="right">0.000</td>
+<td align="right">0.655</td>
+<td align="right">0.070</td>
+</tr>
+<tr class="even">
+<td align="left">I7</td>
+<td align="right">0.000</td>
+<td align="right">-0.533</td>
+<td align="right">0.156</td>
+</tr>
+<tr class="odd">
+<td align="left">I8</td>
+<td align="right">0.000</td>
+<td align="right">0.433</td>
+<td align="right">0.338</td>
+</tr>
+<tr class="even">
+<td align="left">I10</td>
+<td align="right">0.000</td>
+<td align="right">-0.472</td>
+<td align="right">0.566</td>
+</tr>
+</tbody>
+</table>
+<p>The fit indices for the structural solution are: GFI = 0.999, SRMR =
+0.041, RMSEA = 0.045, and CFI = 0.964.</p>
+<p>Finally, the individual factor score estimates are computed. Here are
+those of the first 10 respondents:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Respondent</th>
+<th align="left">F1</th>
+<th align="left">F2</th>
+<th align="left">ACQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Respondent 1</td>
+<td align="left">0.16</td>
+<td align="left">0.402</td>
+<td align="left">0.514</td>
+</tr>
+<tr class="even">
+<td align="left">Respondent 2</td>
+<td align="left">-1.011</td>
+<td align="left">-0.972</td>
+<td align="left">0.359</td>
+</tr>
+<tr class="odd">
+<td align="left">Respondent 3</td>
+<td align="left">-0.11</td>
+<td align="left">0.086</td>
+<td align="left">0.621</td>
+</tr>
+<tr class="even">
+<td align="left">Respondent 4</td>
+<td align="left">-0.689</td>
+<td align="left">-0.849</td>
+<td align="left">-0.112</td>
+</tr>
+<tr class="odd">
+<td align="left">Respondent 5</td>
+<td align="left">-0.823</td>
+<td align="left">0.483</td>
+<td align="left">0.03</td>
+</tr>
+<tr class="even">
+<td align="left">Respondent 6</td>
+<td align="left">0.138</td>
+<td align="left">0.497</td>
+<td align="left">1.143</td>
+</tr>
+<tr class="odd">
+<td align="left">Respondent 7</td>
+<td align="left">-0.927</td>
+<td align="left">-0.182</td>
+<td align="left">0.918</td>
+</tr>
+<tr class="even">
+<td align="left">Respondent 8</td>
+<td align="left">0.192</td>
+<td align="left">0.022</td>
+<td align="left">0.33</td>
+</tr>
+<tr class="odd">
+<td align="left">Respondent 9</td>
+<td align="left">0.153</td>
+<td align="left">-0.988</td>
+<td align="left">-0.091</td>
+</tr>
+<tr class="even">
+<td align="left">Respondent 10</td>
+<td align="left">-0.152</td>
+<td align="left">0.558</td>
+<td align="left">-0.359</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Ferrando, P. J., &amp; Seva, U. L. (2000). Unrestricted versus
+restricted factor analysis of multidimensional test items: Some aspects
+of the problem and some suggestions. Psicológica, 21(2), 301-323.</p>
+<p>Morales-Vives, F., Camps, E., &amp; Dueñas, J.M. (2020). Predicting
+academic achievement in adolescents: The role of maturity, intelligence
+and personality. Psicothema, 32(1), 84-91. <a href="https://doi.org/10.7334/psicothema2019.262" class="uri">https://doi.org/10.7334/psicothema2019.262</a></p>
+<p>Morales-Vives, F., Camps, E., &amp; Lorenzo-Seva, U. (2013).
+Development and validation of the psychological maturity assessment
+scale (PSYMAS). European Journal of Psychological Assessment. <a href="doi:10.1027/1015-5759/a000115" class="uri">doi:10.1027/1015-5759/a000115</a></p>
+<p>Morales-Vives, F., Dueñas, J. M. (2018). Predicting suicidal ideation
+in adolescent boys and girls: The role of psychological maturity,
+personality traits, depression and life satisfaction. Spanish Journal of
+Psychology, 21(e10), 1-12. <a href="https://doi.org/10.1017/sjp.2018.12" class="uri">https://doi.org/10.1017/sjp.2018.12</a></p>
+<p>Morales-Vives, F., Ferrando, P.J., Dueñas, J.-M., Martín-Arbós, S.,
+Castarlenas, E. (2024). Are Older Teens More Frustrated than Younger
+Teens by the COVID-19 Restrictions? The Role of Psychological Maturity,
+Personality Traits, Depression and Life Satisfaction. Current
+Psychology, 43, 12208-12220. <a href="https://doi.org/10.1007/s12144-023-04317-6" class="uri">https://doi.org/10.1007/s12144-023-04317-6</a></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
