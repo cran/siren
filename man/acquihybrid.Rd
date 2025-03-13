@@ -13,13 +13,13 @@ acquihybrid(x, content_factors, target, corr = "Pearson", raw_data=TRUE,
 }
 \arguments{
   \item{x}{
-Raw sample scores or a covariance/correlation matrix.
+Raw sample item scores or a covariance/correlation matrix, as a data.frame or a numerical matrix.
 }
   \item{content_factors}{
-The number of content factors to be retained. At least, each factor has to be defined by 3 items, so the maximum number of content factors will be the number of items / 3.
+The number of content factors to be retained. At least, each factor has to be defined by at least 3 items, so the maximum number of content factors will be the number of items / 3.
 }
   \item{target}{
-Target matrix, providing the direction of each item in their corresponding factor. The target is only used as reference for assessing which items have significant loadings on which factors, and the exact value is not used.
+The pattern loading target matrix, which provides the signed dominant loading (higher in absolute values) of each item on its corresponding factor. The target is only used as a reference for determining which items have significant loadings on which factors. The specific loading estimates are not used.
 }
   \item{corr}{
 Determines the type of matrices to be used in the factor analysis. "Pearson": Computes Pearson correlation matrices (linear model); "Polychoric": Computes Polychoric/Tetrachoric correlation matrices (graded model). If the matrix is not positive definite, the smoothing procedure proposed by Bentler and Yuan (2011) is used.
@@ -28,7 +28,7 @@ Determines the type of matrices to be used in the factor analysis. "Pearson": Co
 Logical argument, if TRUE, the entered data will be treated as raw scores (default). If FALSE, the entered data will be treated as a covariance/correlation matrix.
 }
   \item{method}{
-Two possibilities are provided: fixed, which use the AC loadings obtained in the first step to use it as input for CFA and resid, which use the AC free covariance matrix as input for the CFA.
+Two possibilities are provided: fixed, which use the ACQ loadings obtained in the first step to use it as input for CFA and resid, which use the ACQ free covariance matrix as input for the CFA.
 }
   \item{display}{
 Determines if the output will be displayed in the console, TRUE by default. If it is TRUE, the output is printed in console and if it is FALSE, the output is returned silently to the output variable.
@@ -51,7 +51,7 @@ The procedure is structurated in several steps:
 \value{
 \item{loadings}{Obtained loading matrix.}
 \item{fit_indices}{Fit indices: Goodness of Fit Index (GFI), Root Mean Square Residuals (RMSR), Root Mean Square Error of Approximation (RMSEA) and Comparative Fit Index (CFA)}
-\item{AC_variance}{The amount of variance explained by AC}
+\item{AC_variance}{The amount of variance explained by ACQ}
 \item{pfactors}{factor scores. If corr="Pearson", the method is "regression". In the categorical case, with Polychoric correlation, the option is the empirical bayes Modal approach (EBM)}
 }
 \references{

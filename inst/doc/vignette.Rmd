@@ -20,7 +20,7 @@ This vignette ilustrates siren functions using the provided example dataset.
 
 ## Overview
 
-siren performs an hybrid multi-stage factor analytic procedure for controlling the effects of Acquiescence (ACQ) in multidimensional questionnaires for which a restricted factorial solution (Ferrando & Lorenzo-Seva, 2000) can be specified. In the first stage, an unrestricted ACQ factor is estimated and its effects are partialled-out from the inter-item correlation matrix. In the second, a specified CFA solution is fitted to the cleaned matrix. This solution can be specified in two ways: (a) using the cleaned correlation matrix as input, or (b) specifying a full solution which has fixed loadings on the ACQ factor. The use of the program allows (a) the structural properties of the questionnaire to be assessed and (b) unbiased factor score estimates for both ACQ and content to be obtained for each respondent.
+siren performs an hybrid multi-stage factor analytic procedure for controlling the effects of Acquiescence (ACQ) in multidimensional questionnaires for which a restricted factorial solution (Ferrando & Lorenzo-Seva, 2000) can be specified. In the first stage, an ACQ factor is estimated and its effects are partialled-out from the inter-item correlations. In the second, a specified CFA solution is fitted to the cleaned matrix. This solution can be specified in two ways: (a) using the cleaned correlation matrix as input, or (b) specifying a full solution which has fixed loadings on the ACQ factor. The use of the program allows (a) the structural properties of the questionnaire to be assessed and (b) unbiased factor score estimates to be obtained for each respondent.
 
 ## Usage
 
@@ -33,7 +33,7 @@ The complete description of the arguments can be found in the function documenta
 ?acquihybrid
 ```
     
-The minimum required arguments are: the raw sample item scores (x), the content factors to be retained (content_factors) and the target pattern matrix (target), which provides the location of the items in the factors and the direction of each item in their corresponding factor.
+The minimum required arguments are: the raw sample scores (x), the content factors to be retained (content_factors) and the target matrix (target), which provides the direction of each item in their corresponding factor.
 
 In the next section we will provide an empirical example, describing all the used input arguments.
 
@@ -43,17 +43,17 @@ To illustrate how siren works, we have used an existing dataset of 1309 particip
 
 All participants answered the Psychological Maturity Assessment Scale questionnaire (PSYMAS; Morales-Vives et al., 2013), which assesses the psychological maturity of adolescents, understood as the ability to take responsibility for one's own obligations, taking into account one's own characteristics and needs, without showing excessive dependence on others. It consists of 27 items with a five-point response format (1 = Completely disagree, 5 = Completely agree) and it assesses the following factors: work orientation, self-reliance, and identity.
 
-In the current analysis, we have only used ten items from two of the subscales of this questionnaire (four items of the self-reliance subscale and six items of the identity subscale) so that within each subscale half of the items were in one direction (lack of maturity) and the other half in the opposite direction (high maturity). Self-reliance refers to willingness to take the initiative without allowing others to exercise excessive control, and Identity refers to knowledge about own’s characteristics and needs.
+In the current analysis, we have only used ten items from two of the subscales of this questionnaire (four items of self-reliance subscale and six items of identity subscale) so that within each subscale half of the items were in one direction (lack of maturity) and the other half in the opposite direction (high maturity). Self-reliance refers to willingness to take the initiative without allowing others to exercise excessive control, and Identity refers to knowledge about own’s characteristics and needs.
 
-The complete dataset is available through `siren::psymas`. For illustrative purposes, the first 10 respondents' scores are:
+The complete dataset is available through `siren::psymas`. For illustrative purposes, the first 10 responders' scores are:
 
 ```{r, echo=FALSE, results='asis'}
-knitr::kable(cbind(paste0("Respondent ", 1:10),head(siren::psymas, 10)), col.names = c("Respondent","I1 ","I2 ","I3 ","I4 ","I5 ","I6 ","I7 ","I8 ","I9 ","I10"))
+knitr::kable(cbind(paste0("responder", 1:10),head(siren::psymas, 10)), col.names = c("Responder","I1 ","I2 ","I3 ","I4 ","I5 ","I6 ","I7 ","I8 ","I9 ","I10"))
 ```
 
-As mentioned, two content factors will be specified int this case (Self-reliance and identity).
+As mentioned, the `content factors` to be retained in this case will be 2 (Self-reliance and identity).
 
-Finally, the `target_matrix` of the 10 items is a matrix composed by 0 (the item does not measure this factor), -9 or 9, when the item measures the factor, in reverse or direct way.
+Finally, the `target_matrix` of the 10 items is a matrix composed by 0 (the item does not measure this factor), -9 or 9, when the item measures the item, in reverse or direct way.
 
     psymas_target=cbind(c(-9,-9,0,0,0,9,0,0,9,0),c(0,0,-9,9,-9,0,9,-9,0,9))
 
@@ -63,11 +63,9 @@ Which reads as:
 knitr::kable(cbind(c("I1","I2","I3","I4","I5","I6","I7","I8","I9","I10"),c(-9,-9,0,0,0,9,0,0,9,0),c(0,0,-9,9,-9,0,9,-9,0,9)), col.names = c("Item","F1","F2"))
 ```
 
-The example can now be computed using the following code:
+Finally, the example can be computed using the following code:
 
     acquihybrid(psymas, content_factors = 2, target = psymas_target, corr = "Polychoric")
-    
-Note that the corr = "Polychoric" argument specifies that the item scores are treated as ordered-categorical and that the structural non-linear solution is fitted to the inter-item polychoric correlation matrix.
 
 ```{r, include = FALSE}
 library(siren)
@@ -78,31 +76,30 @@ fit_indices = results$fit_indices
 psymas_pfactors = results$pfactors
 ```
 
-The factor loadings estimates are:
+The factor loadings scores are:
 
 ```{r, echo=FALSE, results='asis'}
 rownames(psymas_loadings) <- c("I1", "I2", "I6", "I9", "I3", "I4", "I5", "I7", "I8", "I10")
 knitr::kable(psymas_loadings, col.names = c("Item", "F1", "F2", "ACQ"))
 ```
 
-The fit indices for the structural solution are: GFI = `r round(fit_indices$gfi,3)`, SRMR = `r round(fit_indices$srmr,3)`, RMSEA = `r round(fit_indices$rmsea,3)`, and CFI = `r round(fit_indices$cfi,3)`.
+The fit indices scores are: GFI = `r round(fit_indices$gfi,3)`, SRMR = `r round(fit_indices$srmr,3)`, RMSEA = `r round(fit_indices$rmsea,3)`, and CFI = `r round(fit_indices$cfi,3)`.
 
 
-Finally, the individual factor score estimates are computed. Here are those of the first 10 respondents:
+Finally, the individual factor scores are computed. Here are the factor scores of the first 10 responders:
 
 ```{r, echo=FALSE, results='asis'}
-knitr::kable(cbind(paste0("Respondent ", 1:10),head(round(psymas_pfactors,3), 10)), col.names = c("Respondent","F1", "F2", "ACQ"))
+knitr::kable(cbind(paste0("responder", 1:10),head(round(psymas_pfactors,3), 10)), col.names = c("Responder","F1", "F2", "ACQ"))
 ```
 
 ## References
 
-Ferrando, P. J., & Seva, U. L. (2000). Unrestricted versus restricted factor analysis of multidimensional test items: Some aspects of the problem and some suggestions. Psicológica, 21(2), 301-323.
+Ferrando, P. J., & Lorenzo-Seva, U. (2000). Unrestricted versus restricted factor analysis of multidimensional test items: Some aspects of the problem and some suggestions. Psicológica, 21(2), 301-323.
 
-Morales-Vives, F., Camps, E., & Dueñas, J.M. (2020). Predicting academic achievement in adolescents: The role of maturity, intelligence and personality. Psicothema, 32(1), 84-91. https://doi.org/10.7334/psicothema2019.262
+Ferrando, P. J., & Lorenzo-Seva, U. (2010). Unrestricted item factor analysis and some relations with item response theory. Technical report, Department of Psychology, Universitat Rovira i Virgili, Tarragona.http://psico.fcep.urv.es/utilitats/factor. 
+
+Ferrando, P. J., Lorenzo-Seva, U., & Chico, E. (2003). Unrestricted factor analytic procedures for assessing acquiescent responding in balanced, theoretically unidimensional personality scales. Multivariate Behavioral Research, 3(38):353–374, doi:10.1207/S15327906MBR3803_04
+
+Morales-Vives, F., Camps, E., & Lorenzo-Seva, U. (2012). Manual del Cuestionario de Madurez Psicológica PSYMAS. TEA Ediciones, S.A. 
 
 Morales-Vives, F., Camps, E., & Lorenzo-Seva, U. (2013). Development and validation of the psychological maturity assessment scale (PSYMAS). European Journal of Psychological Assessment. doi:10.1027/1015-5759/a000115
-
-Morales-Vives, F., Dueñas, J. M. (2018). Predicting suicidal ideation in adolescent boys and girls: The role of psychological maturity, personality traits, depression and life satisfaction. Spanish Journal of Psychology, 21(e10), 1-12. https://doi.org/10.1017/sjp.2018.12
-
-Morales-Vives, F., Ferrando, P.J., Dueñas, J.-M., Martín-Arbós, S., Castarlenas, E. (2024). Are Older Teens More Frustrated than Younger Teens by the COVID-19 Restrictions? The Role of Psychological Maturity, Personality Traits, Depression and Life Satisfaction. Current Psychology, 43, 12208-12220. https://doi.org/10.1007/s12144-023-04317-6
-

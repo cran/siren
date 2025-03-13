@@ -12,7 +12,7 @@
 
 <meta name="author" content="David Navarro-Gonzalez, Pere Joan Ferrando, Fabia Morales-Vives and Ana Hernandez-Dorado" />
 
-<meta name="date" content="2024-11-07" />
+<meta name="date" content="2025-03-13" />
 
 <title>siren Vignette</title>
 
@@ -62,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">siren Vignette</h1>
 <h4 class="author">David Navarro-Gonzalez, Pere Joan Ferrando, Fabia
 Morales-Vives and Ana Hernandez-Dorado</h4>
-<h4 class="date">2024-11-07</h4>
+<h4 class="date">2025-03-13</h4>
 
 
 
@@ -352,15 +352,15 @@ dataset.</p>
 <p>siren performs an hybrid multi-stage factor analytic procedure for
 controlling the effects of Acquiescence (ACQ) in multidimensional
 questionnaires for which a restricted factorial solution (Ferrando &amp;
-Lorenzo-Seva, 2000) can be specified. In the first stage, an
-unrestricted ACQ factor is estimated and its effects are partialled-out
-from the inter-item correlation matrix. In the second, a specified CFA
-solution is fitted to the cleaned matrix. This solution can be specified
-in two ways: (a) using the cleaned correlation matrix as input, or (b)
-specifying a full solution which has fixed loadings on the ACQ factor.
-The use of the program allows (a) the structural properties of the
-questionnaire to be assessed and (b) unbiased factor score estimates for
-both ACQ and content to be obtained for each respondent.</p>
+Lorenzo-Seva, 2000) can be specified. In the first stage, an ACQ factor
+is estimated and its effects are partialled-out from the inter-item
+correlations. In the second, a specified CFA solution is fitted to the
+cleaned matrix. This solution can be specified in two ways: (a) using
+the cleaned correlation matrix as input, or (b) specifying a full
+solution which has fixed loadings on the ACQ factor. The use of the
+program allows (a) the structural properties of the questionnaire to be
+assessed and (b) unbiased factor score estimates to be obtained for each
+respondent.</p>
 </div>
 <div id="usage" class="section level2">
 <h2>Usage</h2>
@@ -369,11 +369,10 @@ both ACQ and content to be obtained for each respondent.</p>
 <p>The complete description of the arguments can be found in the
 function documentation:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>?acquihybrid</span></code></pre></div>
-<p>The minimum required arguments are: the raw sample item scores (x),
-the content factors to be retained (content_factors) and the target
-pattern matrix (target), which provides the location of the items in the
-factors and the direction of each item in their corresponding
-factor.</p>
+<p>The minimum required arguments are: the raw sample scores (x), the
+content factors to be retained (content_factors) and the target matrix
+(target), which provides the direction of each item in their
+corresponding factor.</p>
 <p>In the next section we will provide an empirical example, describing
 all the used input arguments.</p>
 </div>
@@ -392,19 +391,19 @@ others. It consists of 27 items with a five-point response format (1 =
 Completely disagree, 5 = Completely agree) and it assesses the following
 factors: work orientation, self-reliance, and identity.</p>
 <p>In the current analysis, we have only used ten items from two of the
-subscales of this questionnaire (four items of the self-reliance
-subscale and six items of the identity subscale) so that within each
-subscale half of the items were in one direction (lack of maturity) and
-the other half in the opposite direction (high maturity). Self-reliance
-refers to willingness to take the initiative without allowing others to
-exercise excessive control, and Identity refers to knowledge about own’s
+subscales of this questionnaire (four items of self-reliance subscale
+and six items of identity subscale) so that within each subscale half of
+the items were in one direction (lack of maturity) and the other half in
+the opposite direction (high maturity). Self-reliance refers to
+willingness to take the initiative without allowing others to exercise
+excessive control, and Identity refers to knowledge about own’s
 characteristics and needs.</p>
 <p>The complete dataset is available through <code>siren::psymas</code>.
-For illustrative purposes, the first 10 respondents’ scores are:</p>
+For illustrative purposes, the first 10 responders’ scores are:</p>
 <table>
 <thead>
 <tr class="header">
-<th align="left">Respondent</th>
+<th align="left">Responder</th>
 <th align="right">I1</th>
 <th align="right">I2</th>
 <th align="right">I3</th>
@@ -419,7 +418,7 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Respondent 1</td>
+<td align="left">responder1</td>
 <td align="right">1</td>
 <td align="right">4</td>
 <td align="right">3</td>
@@ -432,7 +431,7 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 <td align="right">5</td>
 </tr>
 <tr class="even">
-<td align="left">Respondent 2</td>
+<td align="left">responder2</td>
 <td align="right">2</td>
 <td align="right">1</td>
 <td align="right">1</td>
@@ -445,7 +444,7 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 <td align="right">5</td>
 </tr>
 <tr class="odd">
-<td align="left">Respondent 3</td>
+<td align="left">responder3</td>
 <td align="right">4</td>
 <td align="right">2</td>
 <td align="right">3</td>
@@ -458,7 +457,7 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 <td align="right">5</td>
 </tr>
 <tr class="even">
-<td align="left">Respondent 4</td>
+<td align="left">responder4</td>
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">2</td>
@@ -471,7 +470,7 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 <td align="right">4</td>
 </tr>
 <tr class="odd">
-<td align="left">Respondent 5</td>
+<td align="left">responder5</td>
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">2</td>
@@ -484,7 +483,7 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 <td align="right">4</td>
 </tr>
 <tr class="even">
-<td align="left">Respondent 6</td>
+<td align="left">responder6</td>
 <td align="right">2</td>
 <td align="right">3</td>
 <td align="right">4</td>
@@ -497,7 +496,7 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 <td align="right">5</td>
 </tr>
 <tr class="odd">
-<td align="left">Respondent 7</td>
+<td align="left">responder7</td>
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">3</td>
@@ -510,7 +509,7 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 <td align="right">5</td>
 </tr>
 <tr class="even">
-<td align="left">Respondent 8</td>
+<td align="left">responder8</td>
 <td align="right">1</td>
 <td align="right">3</td>
 <td align="right">4</td>
@@ -523,7 +522,7 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 <td align="right">4</td>
 </tr>
 <tr class="odd">
-<td align="left">Respondent 9</td>
+<td align="left">responder9</td>
 <td align="right">3</td>
 <td align="right">2</td>
 <td align="right">1</td>
@@ -536,7 +535,7 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 <td align="right">5</td>
 </tr>
 <tr class="even">
-<td align="left">Respondent 10</td>
+<td align="left">responder10</td>
 <td align="right">4</td>
 <td align="right">1</td>
 <td align="right">1</td>
@@ -550,11 +549,11 @@ For illustrative purposes, the first 10 respondents’ scores are:</p>
 </tr>
 </tbody>
 </table>
-<p>As mentioned, two content factors will be specified int this case
-(Self-reliance and identity).</p>
+<p>As mentioned, the <code>content factors</code> to be retained in this
+case will be 2 (Self-reliance and identity).</p>
 <p>Finally, the <code>target_matrix</code> of the 10 items is a matrix
 composed by 0 (the item does not measure this factor), -9 or 9, when the
-item measures the factor, in reverse or direct way.</p>
+item measures the item, in reverse or direct way.</p>
 <pre><code>psymas_target=cbind(c(-9,-9,0,0,0,9,0,0,9,0),c(0,0,-9,9,-9,0,9,-9,0,9))</code></pre>
 <p>Which reads as:</p>
 <table>
@@ -618,13 +617,9 @@ item measures the factor, in reverse or direct way.</p>
 </tr>
 </tbody>
 </table>
-<p>The example can now be computed using the following code:</p>
+<p>Finally, the example can be computed using the following code:</p>
 <pre><code>acquihybrid(psymas, content_factors = 2, target = psymas_target, corr = &quot;Polychoric&quot;)</code></pre>
-<p>Note that the corr = “Polychoric” argument specifies that the item
-scores are treated as ordered-categorical and that the structural
-non-linear solution is fitted to the inter-item polychoric correlation
-matrix.</p>
-<p>The factor loadings estimates are:</p>
+<p>The factor loadings scores are:</p>
 <table>
 <thead>
 <tr class="header">
@@ -697,14 +692,14 @@ matrix.</p>
 </tr>
 </tbody>
 </table>
-<p>The fit indices for the structural solution are: GFI = 0.999, SRMR =
-0.041, RMSEA = 0.045, and CFI = 0.964.</p>
-<p>Finally, the individual factor score estimates are computed. Here are
-those of the first 10 respondents:</p>
+<p>The fit indices scores are: GFI = 0.999, SRMR = 0.041, RMSEA = 0.045,
+and CFI = 0.964.</p>
+<p>Finally, the individual factor scores are computed. Here are the
+factor scores of the first 10 responders:</p>
 <table>
 <thead>
 <tr class="header">
-<th align="left">Respondent</th>
+<th align="left">Responder</th>
 <th align="left">F1</th>
 <th align="left">F2</th>
 <th align="left">ACQ</th>
@@ -712,61 +707,61 @@ those of the first 10 respondents:</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Respondent 1</td>
+<td align="left">responder1</td>
 <td align="left">0.16</td>
 <td align="left">0.402</td>
 <td align="left">0.514</td>
 </tr>
 <tr class="even">
-<td align="left">Respondent 2</td>
+<td align="left">responder2</td>
 <td align="left">-1.011</td>
 <td align="left">-0.972</td>
 <td align="left">0.359</td>
 </tr>
 <tr class="odd">
-<td align="left">Respondent 3</td>
+<td align="left">responder3</td>
 <td align="left">-0.11</td>
 <td align="left">0.086</td>
 <td align="left">0.621</td>
 </tr>
 <tr class="even">
-<td align="left">Respondent 4</td>
+<td align="left">responder4</td>
 <td align="left">-0.689</td>
 <td align="left">-0.849</td>
 <td align="left">-0.112</td>
 </tr>
 <tr class="odd">
-<td align="left">Respondent 5</td>
+<td align="left">responder5</td>
 <td align="left">-0.823</td>
 <td align="left">0.483</td>
 <td align="left">0.03</td>
 </tr>
 <tr class="even">
-<td align="left">Respondent 6</td>
+<td align="left">responder6</td>
 <td align="left">0.138</td>
 <td align="left">0.497</td>
 <td align="left">1.143</td>
 </tr>
 <tr class="odd">
-<td align="left">Respondent 7</td>
+<td align="left">responder7</td>
 <td align="left">-0.927</td>
 <td align="left">-0.182</td>
 <td align="left">0.918</td>
 </tr>
 <tr class="even">
-<td align="left">Respondent 8</td>
+<td align="left">responder8</td>
 <td align="left">0.192</td>
 <td align="left">0.022</td>
 <td align="left">0.33</td>
 </tr>
 <tr class="odd">
-<td align="left">Respondent 9</td>
+<td align="left">responder9</td>
 <td align="left">0.153</td>
 <td align="left">-0.988</td>
 <td align="left">-0.091</td>
 </tr>
 <tr class="even">
-<td align="left">Respondent 10</td>
+<td align="left">responder10</td>
 <td align="left">-0.152</td>
 <td align="left">0.558</td>
 <td align="left">-0.359</td>
@@ -776,24 +771,22 @@ those of the first 10 respondents:</p>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
-<p>Ferrando, P. J., &amp; Seva, U. L. (2000). Unrestricted versus
+<p>Ferrando, P. J., &amp; Lorenzo-Seva, U. (2000). Unrestricted versus
 restricted factor analysis of multidimensional test items: Some aspects
 of the problem and some suggestions. Psicológica, 21(2), 301-323.</p>
-<p>Morales-Vives, F., Camps, E., &amp; Dueñas, J.M. (2020). Predicting
-academic achievement in adolescents: The role of maturity, intelligence
-and personality. Psicothema, 32(1), 84-91. <a href="https://doi.org/10.7334/psicothema2019.262" class="uri">https://doi.org/10.7334/psicothema2019.262</a></p>
+<p>Ferrando, P. J., &amp; Lorenzo-Seva, U. (2010). Unrestricted item
+factor analysis and some relations with item response theory. Technical
+report, Department of Psychology, Universitat Rovira i Virgili,
+Tarragona.http://psico.fcep.urv.es/utilitats/factor.</p>
+<p>Ferrando, P. J., Lorenzo-Seva, U., &amp; Chico, E. (2003).
+Unrestricted factor analytic procedures for assessing acquiescent
+responding in balanced, theoretically unidimensional personality scales.
+Multivariate Behavioral Research, 3(38):353–374, <a href="doi:10.1207/S15327906MBR3803_04" class="uri">doi:10.1207/S15327906MBR3803_04</a></p>
+<p>Morales-Vives, F., Camps, E., &amp; Lorenzo-Seva, U. (2012). Manual
+del Cuestionario de Madurez Psicológica PSYMAS. TEA Ediciones, S.A.</p>
 <p>Morales-Vives, F., Camps, E., &amp; Lorenzo-Seva, U. (2013).
 Development and validation of the psychological maturity assessment
 scale (PSYMAS). European Journal of Psychological Assessment. <a href="doi:10.1027/1015-5759/a000115" class="uri">doi:10.1027/1015-5759/a000115</a></p>
-<p>Morales-Vives, F., Dueñas, J. M. (2018). Predicting suicidal ideation
-in adolescent boys and girls: The role of psychological maturity,
-personality traits, depression and life satisfaction. Spanish Journal of
-Psychology, 21(e10), 1-12. <a href="https://doi.org/10.1017/sjp.2018.12" class="uri">https://doi.org/10.1017/sjp.2018.12</a></p>
-<p>Morales-Vives, F., Ferrando, P.J., Dueñas, J.-M., Martín-Arbós, S.,
-Castarlenas, E. (2024). Are Older Teens More Frustrated than Younger
-Teens by the COVID-19 Restrictions? The Role of Psychological Maturity,
-Personality Traits, Depression and Life Satisfaction. Current
-Psychology, 43, 12208-12220. <a href="https://doi.org/10.1007/s12144-023-04317-6" class="uri">https://doi.org/10.1007/s12144-023-04317-6</a></p>
 </div>
 
 
